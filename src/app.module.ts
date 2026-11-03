@@ -23,7 +23,7 @@ import {
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'postgrespassword',
+      password: 'postgres044',
       database: 'bookstore_db',
       entities: [
         Customer,
