@@ -12,17 +12,17 @@ import { Order } from './order.entity';
 
 @Entity({ name: 'customers' })
 export class Customer {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ type: 'varchar', length: 150 })
-  name: string;
+  @Column({ name: 'full_name', type: 'varchar', length: 150 })
+  fullName: string;
 
   @Column({ type: 'varchar', length: 150, unique: true })
   email: string;
 
-  @Column({ type: 'varchar', length: 20 })
-  phone: string;
+  @Column({ name: 'phone_number', type: 'varchar', length: 25 })
+  phoneNumber: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

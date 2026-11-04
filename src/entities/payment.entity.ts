@@ -8,25 +8,50 @@ import {
 } from 'typeorm';
 import { Order } from './order.entity';
 
+export enum PaymentMethod {
+  BANK_TRANSFER = 'bank_transfer',
+  CREDIT_CARD = 'credit_card',
+  E_WALLET = 'e_wallet',
+  QRIS = 'qris',
+}
+
+export enum PaymentStatus {
+  PENDING = 'pending',
+  SETTLEMENT = 'settlement',
+  EXPIRED = 'expired',
+  FAILED = 'failed',
+}
+
 @Entity({ name: 'payments' })
 export class Payment {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ name: 'order_id', type: 'uuid', unique: true })
-  orderId: string;
+  @Column({ name: 'order_id', type: 'int', unique: true })
+  orderId: number;
 
-  @Column({ name: 'payment_method', type: 'varchar', length: 50 })
-  paymentMethod: string;
+  @Column({
+    name: 'payment_method',
+    type: 'enum',
+    enum: PaymentMethod,
+  })
+  paymentMethod: PaymentMethod;
+
+  @Column({
+    type: 'enum',
+    enum: PaymentStatus,
+    default: PaymentStatus.PENDING,
+  })
+  status: PaymentStatus;
 
   @Column({ type: 'decimal', precision: 12, scale: 2 })
   amount: number;
 
-  @Column({ type: 'varchar', length: 30, default: 'pending' })
-  status: string;
+  @Column({ name: 'transaction_reference', type: 'varchar', length: 100, nullable: true })
+  transactionReference: string | null;
 
-  @Column({ name: 'paid_at', type: 'timestamp', nullable: true })
-  paidAt: Date | null;
+  @Column({ name: 'payment_date', type: 'timestamp', nullable: true })
+  paymentDate: Date | null;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

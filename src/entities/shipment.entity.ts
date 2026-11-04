@@ -7,13 +7,21 @@ import {
 } from 'typeorm';
 import { Order } from './order.entity';
 
+export enum ShipmentStatus {
+  PENDING = 'pending',
+  DISPATCHED = 'dispatched',
+  IN_TRANSIT = 'in_transit',
+  DELIVERED = 'delivered',
+  FAILED = 'failed',
+}
+
 @Entity({ name: 'shipments' })
 export class Shipment {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ name: 'order_id', type: 'uuid', unique: true })
-  orderId: string;
+  @Column({ name: 'order_id', type: 'int', unique: true })
+  orderId: number;
 
   @Column({ type: 'varchar', length: 100 })
   courier: string;
@@ -21,8 +29,15 @@ export class Shipment {
   @Column({ name: 'tracking_number', type: 'varchar', length: 100, nullable: true })
   trackingNumber: string | null;
 
-  @Column({ type: 'varchar', length: 30, default: 'pending' })
-  status: string;
+  @Column({ name: 'shipping_fee', type: 'decimal', precision: 12, scale: 2, default: 0 })
+  shippingFee: number;
+
+  @Column({
+    type: 'enum',
+    enum: ShipmentStatus,
+    default: ShipmentStatus.PENDING,
+  })
+  status: ShipmentStatus;
 
   @Column({ name: 'shipped_at', type: 'timestamp', nullable: true })
   shippedAt: Date | null;

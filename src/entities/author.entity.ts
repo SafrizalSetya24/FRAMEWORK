@@ -10,11 +10,14 @@ import { BookAuthor } from './book-author.entity';
 
 @Entity({ name: 'authors' })
 export class Author {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: 'varchar', length: 150 })
   name: string;
+
+  @Column({ type: 'text', nullable: true })
+  bio: string | null;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

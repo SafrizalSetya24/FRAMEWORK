@@ -10,20 +10,20 @@ import { Book } from './book.entity';
 
 @Entity({ name: 'order_items' })
 export class OrderItem {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ name: 'order_id', type: 'uuid' })
-  orderId: string;
+  @Column({ name: 'order_id', type: 'int' })
+  orderId: number;
 
-  @Column({ name: 'book_id', type: 'uuid' })
-  bookId: string;
+  @Column({ name: 'book_id', type: 'int' })
+  bookId: number;
 
   @Column({ type: 'int' })
   quantity: number;
 
-  @Column({ type: 'decimal', precision: 12, scale: 2 })
-  price: number;
+  @Column({ name: 'unit_price', type: 'decimal', precision: 12, scale: 2 })
+  unitPrice: number;
 
   @Column({ type: 'decimal', precision: 12, scale: 2 })
   subtotal: number;

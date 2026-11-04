@@ -10,11 +10,17 @@ import { Book } from './book.entity';
 
 @Entity({ name: 'categories' })
 export class Category {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: 'varchar', length: 100, unique: true })
   name: string;
+
+  @Column({ type: 'varchar', length: 120, unique: true })
+  slug: string;
+
+  @Column({ type: 'text', nullable: true })
+  description: string | null;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
